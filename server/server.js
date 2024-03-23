@@ -1,13 +1,18 @@
 const express = require('express');
 const app = express();
 
-require('dotenv').config();
-app.use(express.json());
-const dbConfig = require('./config/dbConfig.js');
+
+// const dbConfig = require('./config/dbConfig.js');
+const connectDB = require('./config/dbConfig.js');
 const usersRoute = require('./routes/userRoute.js');
 const transactionsRoute = require('./routes/transactionsRoutes.js');
 const requestsRoute = require('./routes/requestsRoute.js');
 const adminsRoute = require('./routes/adminRoute.js');
+
+require('dotenv').config();
+app.use(express.json());
+
+connectDB();
 
 // entry point for user route
 app.use('/api/users', usersRoute);
