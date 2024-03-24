@@ -1,7 +1,7 @@
 {
   "name": "wallet",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "index.js",
   "engines": {
     "node": "20.11.0",
     "npm": "10.3.0"
