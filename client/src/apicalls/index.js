@@ -1,9 +1,9 @@
 import axios from 'axios';
 
+// Replace 'https://your-deployment-link' with your actual deployment link
 export const axiosInstance = axios.create({
-    // we need to import base url
-    // baseURL : 'http://localhost/5000', // but this will go from proxy so no need to add this 
-    headers:{
-        'authorization' : `Bearer ${localStorage.getItem('token')}`
+    baseURL: 'https://pvs-wallet-backend.vercel.app/',
+    headers: {
+        'authorization': `Bearer ${localStorage.getItem('token')}`
     }
-})
+});
