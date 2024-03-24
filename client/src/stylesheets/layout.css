@@ -3,7 +3,6 @@
   padding: 15px;
   height: 100vh;
   gap: 15px;
-
 }
 
 .sidebar{
@@ -35,10 +34,9 @@
 }
 
 .active-menu-item{
-    /* border: 2px solid var(--secondary);  */
+  
     border-radius: 3px;
     color: var(--secondary) !important;
-    /* padding: 5px 10px; */
 }
 
 .active-menu-item h1{

@@ -8,6 +8,7 @@ const usersRoute = require('./routes/userRoute.js');
 const transactionsRoute = require('./routes/transactionsRoutes.js');
 const requestsRoute = require('./routes/requestsRoute.js');
 const adminsRoute = require('./routes/adminRoute.js');
+const profileRoute = require('./routes/profileRoute.js');
 
 require('dotenv').config();
 app.use(express.json());
@@ -16,6 +17,8 @@ connectDB();
 
 // entry point for user route
 app.use('/api/users', usersRoute);
+
+app.use('/api/profile', profileRoute);
 
 app.use('/api/admins', adminsRoute);
 

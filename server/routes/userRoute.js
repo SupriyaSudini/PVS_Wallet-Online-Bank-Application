@@ -145,7 +145,4 @@ router.post("/update-user-verified-status", authMiddleware, async(req, res) => {
   });
 
 
-
-
-
 module.exports = router;

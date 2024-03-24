@@ -22,6 +22,7 @@ import Requests from './pages/Requests';
 import Users from './pages/Users';
 import Admins from './pages/Admins';
 import Profile from './pages/Profile';
+import EditProfile from './components/EditProfile';
 function App() {
   const { loading } = useSelector((state) => state.loaders);
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
           <Route path="/admins" element={<ProtectedRoute><Admins /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/profile/edit" element={<ProtectedRoute><EditProfile /></ProtectedRoute>}/>
         </Routes>
       </BrowserRouter>
     </div>

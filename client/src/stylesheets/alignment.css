@@ -89,3 +89,10 @@
 .p-3{
     padding:30px;
 }
+
+.p-left{
+    padding-left:400px;
+}
+.p-bottom{
+    padding-bottom: 30px;
+}
