@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 
 
@@ -14,6 +15,8 @@ const profileRoute = require('./routes/profileRoute.js');
 require('dotenv').config();
 app.use(express.json());
 
+
+app.use(cors());
 connectDB();
 
 // entry point for user route
