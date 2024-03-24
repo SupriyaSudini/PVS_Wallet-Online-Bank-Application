@@ -42,6 +42,15 @@ const PORT = 5000;
 //     });
 // }
 
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
+
+// Handle root URL
+app.get('/', (req, res) => {
+  res.send('Hello, world!');
+});
+
+
 app.listen(PORT, () => {
     console.log(`Server started on Port ${PORT}`);
 });
