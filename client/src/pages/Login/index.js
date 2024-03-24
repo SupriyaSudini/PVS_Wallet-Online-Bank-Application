@@ -41,7 +41,7 @@ function Login() {
 
   return (
     <div className="bg-primary flex items-center justify-center h-screen">
-      <div className="card w-400 p-2">
+      <div className="card w-350 p-2">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl">PVS WALLET - LOGIN</h1>
         </div>
