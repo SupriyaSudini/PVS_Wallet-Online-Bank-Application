@@ -70,7 +70,7 @@ function Login() {
           </Row>
 
           <div style={{ textAlign: 'center' }}>
-            <button className="bg-primary text-white text-lg h-40p w-400 " type="submit">
+            <button className="bg-primary text-white text-lg h-40p w-350 " type="submit">
               LOGIN
             </button>
 
