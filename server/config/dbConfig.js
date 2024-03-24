@@ -29,7 +29,7 @@ const connectDB = async () => {
       // Remove the deprecated options
 
     });
-    console.log('MongoDB Connected successfully');
+    console.log('MongoDB Connected successfully ----');
   } catch (error) {
     console.error('Connection error:', error);
     process.exit(1); // Exit process with failure
