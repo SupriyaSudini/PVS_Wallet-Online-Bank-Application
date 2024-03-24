@@ -31,16 +31,16 @@ app.use('/api/requests', requestsRoute);
 
 // const PORT = 5000;
 const PORT = process.env.PORT || 5000;
-// const path = require("path");
-// _dirname = path.resolve();
+const path = require("path");
+_dirname = path.resolve();
 
-// // heroku deployment
-// if(process.env.NODE_ENV === "production"){
-//     app.use(express.static("client/build"));
-//     app.get("*",(req, res)=>{
-//         res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-//     });
-// }
+// heroku deployment
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static("client/build"));
+    app.get("*",(req, res)=>{
+        res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    });
+}
 
 app.listen(PORT, () => {
     console.log(`Server started on Port ${PORT}`);
