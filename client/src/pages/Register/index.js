@@ -77,7 +77,18 @@ function Register(){
           <Form layout="vertical" onFinish={onFinish}>
             <Row gutter={16}>
               <Col span={6}>
-                <Form.Item label="First Name" name="firstName">
+                <Form.Item label="First Name" name="firstName"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your first name!",
+                  },
+                  {
+                    pattern: /^[a-zA-Z ]*$/,
+                    message: "Please enter a valid first name!",
+                  },
+                ]}
+                >
                 <Input
                     style={getInputStyle('input1')}
                     onMouseEnter={() => handleMouseEnter('input1')}
@@ -89,7 +100,18 @@ function Register(){
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="Last Name" name="lastName">
+                <Form.Item label="Last Name" name="lastName"
+                 rules={[
+                  {
+                    required: true,
+                    message: "Please input your last name!",
+                  },
+                  {
+                    pattern: /^[a-zA-Z ]*$/,
+                    message: "Please enter a valid last name!",
+                  },
+                ]}
+                >
                 <Input
                     style={getInputStyle('input2')}
                     onMouseEnter={() => handleMouseEnter('input2')}
@@ -101,7 +123,18 @@ function Register(){
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="Email" name="email">
+                <Form.Item label="Email" name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your email!",
+                    },
+                    {
+                      type: "email",
+                      message: "Please enter a valid email address!",
+                    },
+                  ]}
+                >
                 <Input
                     style={getInputStyle('input3')}
                     onMouseEnter={() => handleMouseEnter('input3')}
@@ -113,7 +146,19 @@ function Register(){
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="Mobile" name="phoneNumber">
+                <Form.Item label="Mobile" name="phoneNumber"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your phone number!",
+                  },
+                  {
+                    pattern: /^[0-9]{10}$/,
+                    message: "Please enter a valid 10-digit phone number!",
+                  },
+                ]}
+                
+                >
                 <Input
                     style={getInputStyle('input4')}
                     onMouseEnter={() => handleMouseEnter('input4')}
@@ -164,7 +209,14 @@ function Register(){
               </Col>
     
               <Col span={6}>
-                <Form.Item label="Password" name="password">
+                <Form.Item label="Password" name="password"
+                 rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                ]}
+                >
                 <Input.Password
                     style={getInputStyle('input6')}
                     onMouseEnter={() => handleMouseEnter('input6')}
@@ -177,7 +229,23 @@ function Register(){
               </Col>
     
               <Col span={6}>
-                <Form.Item label="Confirm Password" name="confirmPassword">
+                <Form.Item label="Confirm Password" name="confirmPassword"
+                 dependencies={["password"]}
+                 rules={[
+                   {
+                     required: true,
+                     message: "Please confirm your password!",
+                   },
+                   ({ getFieldValue }) => ({
+                     validator(_, value) {
+                       if (!value || getFieldValue("password") === value) {
+                         return Promise.resolve();
+                       }
+                       return Promise.reject(new Error("The two passwords do not match!"));
+                     },
+                   }),
+                 ]}
+                >
                 <Input.Password
                     style={getInputStyle('input7')}
                     onMouseEnter={() => handleMouseEnter('input7')}

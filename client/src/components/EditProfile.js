@@ -84,7 +84,18 @@ const EditProfile = () => {
       <Form layout="vertical" onFinish={onFinish} initialValues={user}>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="First Name" name="firstName">
+            <Form.Item label="First Name" name="firstName"
+             rules={[
+              {
+                required: true,
+                message: "Please input your first name!",
+              },
+              {
+                pattern: /^[a-zA-Z ]*$/,
+                message: "Please enter a valid first name!",
+              },
+            ]}
+            >
               <Input
                 type="text"
                 name="firstName"
@@ -94,7 +105,18 @@ const EditProfile = () => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Last Name" name="lastName">
+            <Form.Item label="Last Name" name="lastName"
+            rules={[
+              {
+                required: true,
+                message: "Please input your last name!",
+              },
+              {
+                pattern: /^[a-zA-Z ]*$/,
+                message: "Please enter a valid last name!",
+              },
+            ]}
+            >
               <Input
                 type="text"
                 name="lastName"
@@ -106,7 +128,18 @@ const EditProfile = () => {
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Email" name="email">
+            <Form.Item label="Email" name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email!",
+              },
+              {
+                type: "email",
+                message: "Please enter a valid email address!",
+              },
+            ]}
+            >
               <Input
                 type="email"
                 name="email"
@@ -116,7 +149,18 @@ const EditProfile = () => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Phone Number" name="phoneNumber">
+            <Form.Item label="Phone Number" name="phoneNumber"
+             rules={[
+              {
+                required: true,
+                message: "Please input your phone number!",
+              },
+              {
+                pattern: /^[0-9]{10}$/,
+                message: "Please enter a valid 10-digit phone number!",
+              },
+            ]}
+            >
               <Input
                 type="tel"
                 name="phoneNumber"
