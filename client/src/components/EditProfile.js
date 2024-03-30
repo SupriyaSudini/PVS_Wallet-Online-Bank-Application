@@ -78,6 +78,10 @@ const EditProfile = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate("/profile");
+  };
+
   return (
     <div>
       <h1>Edit Profile</h1>
@@ -206,8 +210,13 @@ const EditProfile = () => {
         <Row>
           <Col span={24}>
             <Form.Item >
-              <Button className="primary-outlined-btn h-50" htmlType="submit">
+              <Button className="primary-outlined-btn h-50" htmlType="submit" style={{ marginRight: "10px" }}>
                 Save Changes
+              </Button>
+              <Button
+                className="primary-outlined-btn h-50 ml-2"
+                onClick={handleCancel}>
+                Cancel
               </Button>
             </Form.Item>
           </Col>

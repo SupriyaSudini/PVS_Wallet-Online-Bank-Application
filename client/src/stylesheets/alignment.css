@@ -99,3 +99,51 @@
 .p-bottom{
     padding-bottom: 30px;
 }
+
+
+/* Add this CSS to make the homepage responsive */
+@media (max-width: 768px) {
+    /* Adjust the width of the containers for smaller screens */
+    .w-50 {
+      width: 100%;
+    }
+  
+    /* Adjust the padding and margin of the containers for smaller screens */
+    .p-2,
+    .p-2 > * {
+      padding: 10px;
+    }
+  
+    .mt-2 {
+      margin-top: 10px;
+    }
+  
+    /* Adjust the font size for smaller screens */
+    .text-md {
+      font-size: 14px;
+    }
+  
+    /* Make the flex containers stack vertically for smaller screens */
+    .flex {
+      flex-direction: column;
+    }
+  
+    /* Center the content inside flex containers for smaller screens */
+    .justify-between {
+      justify-content: center;
+    }
+    .p-left {
+        padding-left: 0; /* Remove left padding for smaller screens */
+      }
+    
+      /* Center the button for smaller screens */
+      .p-1 {
+        display: flex;
+        justify-content: center;
+      }
+      .ml-2 {
+        margin-top: 10px; /* Add margin-top to create space between the buttons */
+      }
+  }
+  
+  

@@ -46,14 +46,15 @@ const {user} = useSelector(state => state.users);
           <h1 className='text-md'>{user.isAdmin ? "Yes" : "No"}</h1>
          </div>
         
-          </div>
+          {/* </div> */}
          {/* Edit Profile button */}
-        <div class="p-1 p-left">
+        {/* <div class="p-1 p-left"> */}
+        <div className="flex justify-end">
           <Link to="/profile/edit">
             <button className="primary-outlined-btn mt-2">Edit Profile</button>
           </Link>
         </div>
-        
+        </div>
     </div>
   )
 }

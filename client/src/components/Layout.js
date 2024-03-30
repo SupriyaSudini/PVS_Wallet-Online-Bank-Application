@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // import SuperAdminMenuDisplay from './superAdminMenu';
@@ -141,7 +142,20 @@ function Layout({children}) {
   // const menuToRender = user?.isAdmin ? adminMenu : userMenu ;
   const menuToRender = user?.isAdmin ? adminMenu : (user?.role ==="superadmin" ? superMenu : userMenu);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar) {
+        const screenHeight = window.innerHeight;
+        sidebar.style.height = screenHeight + 'px';
+      }
+    };
 
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className='layout'>

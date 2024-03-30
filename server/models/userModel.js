@@ -60,14 +60,6 @@ const userSchema = new mongoose.Schema({
 
 )
 
-// // Set isAdmin to true if role is 'admin'
-// userSchema.pre('save', function(next) {
-//     if (this.role === 'admin') {
-//         this.isAdmin = true;
-//     } else {
-//         this.isAdmin = false;
-//     }
-//     next();
-// });
+
 
 module.exports = User = mongoose.model('users', userSchema);
