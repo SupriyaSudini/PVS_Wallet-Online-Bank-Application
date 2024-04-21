@@ -93,9 +93,9 @@ const validateIdentificationNumber = (_, value) => {
   }
   
   if (identificationType === "SOCIAL CARD") {
-    const regex = /^[A-Za-z]{3}-[A-Za-z]{2}-\d{4}$/;
+    const regex = /^\d{3}-\d{2}-\d{4}$/;
     if (!regex.test(value)) {
-      return Promise.reject(new Error("Please enter a valid Social Security Card number (AAA-GG-SSSS)"));
+      return Promise.reject(new Error("Please enter a valid Social Security Card number (123-45-6789)"));
     }
   }
 
