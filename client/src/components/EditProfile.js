@@ -7,7 +7,7 @@ import { ShowLoading, HideLoading } from "../redux/loadersSlice";
 import { ReloadUser } from "../redux/usersSlice";
 import { useNavigate } from "react-router-dom";
 import '../stylesheets/alignment.css';
-import PhoneInput from "react-phone-number-input";
+import PhoneInput,{isValidPhoneNumber} from "react-phone-number-input";
 
 const EditProfile = () => {
 
@@ -61,6 +61,23 @@ const EditProfile = () => {
       [name]: value,
     });
   };
+
+
+  const handlePhone = (value) => {
+   
+      setFormData({
+        ...formData,
+        phoneNumber: value,
+ 
+      });
+    }
+
+
+  
+  
+  
+  
+  
 
   const onFinish = async () => {
     try {
@@ -163,16 +180,20 @@ const EditProfile = () => {
                 message: "Please input your phone number!",
               },
               {
-                pattern: /^[0-9]{10}$/,
-                message: "Please enter a valid 10-digit phone number!",
+                validator: (_, value) =>
+                  value && isValidPhoneNumber(value)
+                    ? Promise.resolve()
+                    : Promise.reject(new Error("Invalid phone number")),
               },
+            
             ]}
             >
-              <Input
-                // defaultCountry="US"
+              <PhoneInput
+                defaultCountry="US"
                 name="phoneNumber"
+                // value={formData.phoneNumber}
                 value={formData.phoneNumber}
-                onChange={handleChange}
+                onChange={handlePhone}
               />
             </Form.Item>
           </Col>
@@ -180,28 +201,28 @@ const EditProfile = () => {
         <Row gutter={16}>
           <Col span={12}>
           <Form.Item label="Identification Type" name="identificationType"
-  rules={[
-    {
-      required: true,
-      message: "Please select your identification type!",
-    },
-  ]}
->
-  <Select
-    value={formData.identificationType}
-    onChange={(value) => {
-      setFormData({
-        ...formData,
-        identificationType: value,
-      })
-    }}
-  >
+            rules={[
+              {
+                required: true,
+                message: "Please select your identification type!",
+              },
+            ]}
+          >
+    <Select
+      value={formData.identificationType}
+      onChange={(value) => {
+        setFormData({
+          ...formData,
+          identificationType: value,
+        })
+      }}
+    >
     <Option value="NATIONAL ID">National ID</Option>
     <Option value="PASSPORT">Passport</Option>
     <Option value="DRIVING LICENSE">Driving License</Option>
     <Option value="SOCIAL CARD">Social Security Card (SSN)</Option>
   </Select>
-</Form.Item>
+ </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Identification Number" name="identificationNumber"
