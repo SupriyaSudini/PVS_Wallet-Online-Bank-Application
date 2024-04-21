@@ -9,7 +9,8 @@
   "scripts": {
     "start": "nodemon server/index.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run build\" \"npm start\""
+    "dev": "concurrently \"npm run build\" \"npm start\"",
+    "test": "npx jest"
   },
   "author": "",
   "license": "ISC",
@@ -25,5 +26,9 @@
     "stripe": "^14.17.0",
     "uuidv4": "^6.2.13"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
+  }
 }

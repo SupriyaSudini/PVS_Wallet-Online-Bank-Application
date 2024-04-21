@@ -122,7 +122,7 @@ function TransferFundsModel({
                  onClick = {() => setShowTransferFundsModel(false)}
                 > Cancel</button>
                 { isVerified === 'true' && ( 
-                <button className="primary-contained-btn"> Transfer</button>)
+                <button className="primary-contained-btn">Transfer</button>)
                 }
 
             </div>

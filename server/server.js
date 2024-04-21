@@ -2,8 +2,6 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-
-
 // const dbConfig = require('./config/dbConfig.js');
 const connectDB = require('./config/dbConfig.js');
 const usersRoute = require('./routes/userRoute.js');

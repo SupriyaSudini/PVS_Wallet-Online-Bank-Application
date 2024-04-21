@@ -13,6 +13,12 @@ import { message } from 'antd';
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 
+// import PhoneInput from 'react-phone-number-input';
+import PhoneInput,{isValidPhoneNumber} from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+
+
+
 
 const { Option } = Select;
 
@@ -20,6 +26,13 @@ function Register(){
   /* for hover effect and click effect*/
     const [hoveredInput, setHoveredInput] = useState(null);
     const [clickedInput, setClickedInput] = useState(null);
+
+    const [value, setValue] = useState();
+
+
+    // for validation of identification type 
+    const [form] = Form.useForm();
+    const [identificationType, setIdentificationType] = useState(null);
   
     const handleMouseEnter = (input) => {
       setHoveredInput(input);
@@ -63,6 +76,43 @@ function Register(){
      }
     }
  /* it ends here */
+
+
+
+
+ // validation of identification type 
+
+ const handleIdentificationTypeChange = (value) => {
+  setIdentificationType(value);
+  form.validateFields(["identificationNumber"]); // Trigger validation for identification number
+};
+
+const validateIdentificationNumber = (_, value) => {
+  if (identificationType === "PASSPORT" && (value.length < 6 || value.length > 9)) {
+    return Promise.reject(new Error("Passport number should be between 6 and 9 characters"));
+  }
+  
+  if (identificationType === "SOCIAL CARD") {
+    const regex = /^[A-Za-z]{3}-[A-Za-z]{2}-\d{4}$/;
+    if (!regex.test(value)) {
+      return Promise.reject(new Error("Please enter a valid Social Security Card number (AAA-GG-SSSS)"));
+    }
+  }
+
+  if (identificationType === "DRIVING LICENSE" && !/^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/.test(value)) {
+    return Promise.reject(new Error("Driving License number of atleast 6 characters (include both alphabetical and numeric characters)"));
+  }
+
+  if (identificationType === "NATIONAL ID" && value.length < 6) {
+    return Promise.reject(new Error("National ID should be at least 6 characters"));
+  }
+  
+
+  return Promise.resolve();
+};
+
+
+
 
     return (
         <div className="m-5">
@@ -146,34 +196,78 @@ function Register(){
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="Mobile" name="phoneNumber"
+
+             {/* <Form.Item label="Mobile" name="phoneNumber"
                 rules={[
                   {
                     required: true,
                     message: "Please input your phone number!",
                   },
-                  {
-                    pattern: /^[0-9]{10}$/,
-                    message: "Please enter a valid 10-digit phone number!",
-                  },
                 ]}
-                
-                >
-                <Input
-                    style={getInputStyle('input4')}
-                    onMouseEnter={() => handleMouseEnter('input4')}
-                    onMouseLeave={handleMouseLeave}
-                    onClick={() => handleClick('input4')}
-                    type="text" placeholder="mobile"
-                    prefix={<PhoneOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} 
-                    />
-                </Form.Item>
+               >
+              <PhoneInput
+                style={getInputStyle('input4')}
+                onMouseEnter={() => handleMouseEnter('input4')}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleClick('input4')}
+                placeholder="Mobile"
+                defaultCountry='US'
+                value={value}
+                onChange={value => setValue(value)}
+                // onChange = {setValue}
+                error={value ? (isValidPhoneNumber(value) ? undefined : 'Invalid phone number') : 'Phone number required'}
+                />
+
+                <span style={{ color: 'red' }}>
+                  {value && !isValidPhoneNumber(value) ? 'Invalid Phone Number': ''}
+                </span>
+
+          </Form.Item> */}
+
+
+<Form.Item
+  label="Mobile"
+  name="phoneNumber"
+  rules={[
+    {
+      required: true,
+      message: "Please input your phone number!",
+    },
+    {
+      validator: (_, value) =>
+        value && isValidPhoneNumber(value)
+          ? Promise.resolve()
+          : Promise.reject(new Error("Invalid phone number")),
+    },
+  ]}
+>
+  <PhoneInput
+    style={getInputStyle('input4')}
+    onMouseEnter={() => handleMouseEnter('input4')}
+    onMouseLeave={handleMouseLeave}
+    onClick={() => handleClick('input4')}
+    placeholder="Mobile"
+    defaultCountry='US'
+    value={value}
+    onChange={setValue}
+  />
+</Form.Item>
+
               </Col>
     
               <Col span={6}>
-                <Form.Item label="Identification Type" name="identificationType">
+                <Form.Item label="Identification Type" name="identificationType"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select your identification type!",
+                    },
+                  ]}
+                
+                >
                   {/* <Select> */}
                    <Select
+                        onChange={handleIdentificationTypeChange}
                         style={getInputStyle('input8')}
                         onMouseEnter={() => handleMouseEnter('input8')}
                         onMouseLeave={handleMouseLeave}
@@ -187,7 +281,16 @@ function Register(){
               </Col>
     
               <Col span={6}>
-                <Form.Item label="Identification Number" name="identificationNumber">
+                <Form.Item label="Identification Number" name="identificationNumber"
+                  rules={[
+                      { required: true, 
+                        message: "Please input your identification number" 
+                      }, 
+                      { 
+                        validator: validateIdentificationNumber
+                      }
+                    ]}
+                >
                 <Input
                     style={getInputStyle('input5')}
                     onMouseEnter={() => handleMouseEnter('input5')}
@@ -198,7 +301,14 @@ function Register(){
               </Col>
     
               <Col span={24}>
-                <Form.Item label="Address" name="address">
+                <Form.Item label="Address" name="address"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your address!",
+                    },
+                  ]}
+                >
                 <TextArea
                     style={getInputStyle('textarea')}
                     onMouseEnter={() => handleMouseEnter('textarea')}
