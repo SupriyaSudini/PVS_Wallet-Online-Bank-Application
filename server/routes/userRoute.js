@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 // for generating token
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middlewares/authMiddleware");
+const nodemailer = require('nodemailer');
 
 //register user account
 router.post("/register", async (req, res) => {
@@ -143,6 +144,197 @@ router.post("/update-user-verified-status", authMiddleware, async(req, res) => {
       });
     }
   });
+
+// forgot password
+// router.post("/forgot-password", async (req, res) => {
+//   try {
+//     const { email } = req.body;
+
+//     // Check if the user with the given email exists
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.send({
+//         success: false,
+//         message: "User not found",
+//       });
+//     }
+
+//     // Generate a token for resetting the password
+//     const token = jwt.sign({ userId: user._id }, process.env.jwt_secret, {
+//       expiresIn: "1h", // Token expires in 1 hour
+//     });
+
+//     // Send an email to the user with the reset password link
+//     // In a real application, you would send an email with a link containing the token
+//     // For demonstration purposes, we're just logging the reset link to the console
+//     const resetLink = `http://yourwebsite.com/reset-password?token=${token}`;
+//     console.log("Reset Password Link:", resetLink);
+
+//     return res.send({
+//       success: true,
+//       message: "Password reset link sent to your email",
+//     });
+//   } catch (error) {
+//     res.send({
+//       success: false,
+//       message: "Failed to send reset password email",
+//     });
+//   }
+// });
+// router.post("/forgot-password", async (req, res) => {
+//   try {
+//     const { email } = req.body;
+
+//     // Check if the user with the given email exists
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.send({
+//         success: false,
+//         message: "User not found",
+//       });
+//     }
+
+//     // For demonstration purposes, we're just sending a success message without sending an email
+//     return res.send({
+//       success: true,
+//       message: "Password reset link would have been sent to your email",
+//     });
+//   } catch (error) {
+//     res.send({
+//       success: false,
+//       message: "Failed to send reset password email",
+//     });
+//   }
+// });
+  
+// forgot password
+
+
+router.post("/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Check if the user with the given email exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.send({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Generate a token for resetting the password
+    const token = jwt.sign({ userId: user._id }, process.env.jwt_secret, {
+      expiresIn: "1h", // Token expires in 1 hour
+    });
+
+    // Send an email to the user with the reset password link
+    
+    // const resetLink = `http://localhost:3000/reset-password/${token}`;
+    const resetLink = `https://pvs-wallet-backend.vercel.app/reset-password/${token}`
+
+
+ 
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: 'pvswallet@gmail.com',
+      to: email,
+      subject: 'Reset Your Password',
+      text: `Click the following link to reset your password: ${resetLink}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email:", error);
+        return res.send({
+          success: false,
+          message: "Failed to send reset password email",
+        });
+      } else {
+        console.log("Email sent:", info.response);
+        return res.send({
+          success: true,
+          message: "Password reset link sent to your email",
+        });
+      }
+    });
+
+  } catch (error) {
+    console.error("Error:", error);
+    res.send({
+      success: false,
+      message: "Failed to send reset password email",
+    });
+  }
+});
+
+
+
+// Reset password route
+// router.post('/reset-password/:token', async (req, res) => {
+//   const { token } = req.params; // Retrieve the token from params
+//   const { newPassword } = req.body;
+
+//   try {
+//     // Verify the token
+//     const decoded = jwt.verify(token, process.env.jwt_secret);
+//     const user = await User.findById(decoded.userId);
+
+//     if (!user) {
+//       return res.status(404).json({ message: 'User not found' });
+//     }
+
+//     // Update the password
+//     const salt = await bcrypt.genSalt(10);
+//     user.password = await bcrypt.hash(newPassword, salt);
+//     await user.save();
+
+//     res.json({ message: 'Password reset successfully for you' });
+//   } catch (error) {
+//     console.error('Error resetting password:', error.message);
+//     res.status(500).json({ message: 'Failed to reset password' });
+//   }
+// });
+
+router.post('/reset-password/:token', async (req, res) => {
+  const { token } = req.params;
+  const { newPassword } = req.body;
+ console.log({token});
+  try {
+    const decoded = jwt.verify(token, process.env.jwt_secret);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
+
+    res.json({ 
+      success:true,
+      message: 'Password reset successfully for you' 
+    });
+  } catch (error) {
+    console.error('Error resetting password:', error.message);
+    if (error.name === 'JsonWebTokenError') {
+      return res.status(400).json({ message: 'Invalid token' });
+    }
+    res.status(500).json({ message: 'Failed to reset password' });
+  }
+});
+
+
+
+
 
 
 module.exports = router;

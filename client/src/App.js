@@ -23,6 +23,9 @@ import Users from './pages/Users';
 import Admins from './pages/Admins';
 import Profile from './pages/Profile';
 import EditProfile from './components/EditProfile';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+
 function App() {
   const { loading } = useSelector((state) => state.loaders);
   return (
@@ -40,6 +43,8 @@ function App() {
           <Route path="/admins" element={<ProtectedRoute><Admins /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/profile/edit" element={<ProtectedRoute><EditProfile /></ProtectedRoute>}/>
+          <Route path="/forgot-password" element = {<PublicRoute><ForgotPasswordPage/></PublicRoute>}/>
+          <Route path="/reset-password/:token" element = {<PublicRoute><ResetPasswordPage /></PublicRoute>} />
         </Routes>
       </BrowserRouter>
     </div>

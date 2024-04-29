@@ -45,7 +45,7 @@ function Login() {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl">PVS WALLET - LOGIN</h1>
         </div>
-        <hr />
+      
         <Form layout="vertical" onFinish={onFinish} >
           <Row gutter={16}>
 
@@ -78,6 +78,9 @@ function Login() {
           <h5 className="text-sm text-center underline"
             onClick={() => navigate('/register')}>
             Not a member, Register
+          </h5>
+          <h5 className="text-sm text-center underline" onClick={() => navigate('/forgot-password')}>
+              Forgot Password
           </h5>
         </Form>
       </div>

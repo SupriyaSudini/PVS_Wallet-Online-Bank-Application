@@ -34,5 +34,5 @@ router.post("/edit/update-user-info", authMiddleware, async (req, res) => {
 });
 
 
-
 module.exports = router;
+

@@ -54,3 +54,25 @@ export const UpdateUserVerifiedStatus = async(payload) => {
 }
 
 
+// get forgot password
+export const ForgotPassword = async (email) => {
+        try {
+          const {data} = await axiosInstance.post('/api/users/forgot-password', { email });
+          return data;
+        } catch (error) {
+          return error.message.data;
+        }
+  };
+
+
+// reset password
+export const ResetPassword = async (token, newPassword) => {
+    try {
+      const response = await axiosInstance.post(`/api/users/reset-password/${token}`, {
+        newPassword,
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response.data;
+    }
+  };
