@@ -55,11 +55,11 @@ function ForgotPasswordPage() {
           </Form.Item>
 
           <Form.Item>
-            <Button
+          <Button
               type="primary"
               htmlType="submit"
               className="bg-primary text-white text-lg h-40p w-350"
-            >
+              >
               Reset Password
             </Button>
           </Form.Item>
