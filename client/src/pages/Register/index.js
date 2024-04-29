@@ -195,8 +195,12 @@ const validateIdentificationNumber = (_, value) => {
                       required: true,
                       message: "Please input your email!",
                     },
+                    // {
+                    //   type: "email",
+                    //   message: "Please enter a valid email address!",
+                    // },
                     {
-                      type: "email",
+                      pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
                       message: "Please enter a valid email address!",
                     },
                   
@@ -386,8 +390,6 @@ const validateIdentificationNumber = (_, value) => {
     prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
   />
 </Form.Item>
-
-
 
 
               </Col>
