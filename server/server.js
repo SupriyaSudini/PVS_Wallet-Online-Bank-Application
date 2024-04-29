@@ -14,10 +14,10 @@ require('dotenv').config();
 app.use(express.json());
 
 
-// app.use(cors());
-app.use(cors({
-  origin: 'https://pvs-wallet-bank-application.vercel.app'
-}));
+app.use(cors());
+// app.use(cors({
+//   origin: 'https://pvs-wallet-bank-application.vercel.app'
+// }));
 
 connectDB();
 

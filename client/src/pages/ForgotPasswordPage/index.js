@@ -58,7 +58,7 @@ function ForgotPasswordPage() {
           <Button
               type="primary"
               htmlType="submit"
-              className="bg-primary text-white text-lg h-40p w-350"
+              className="bg-primary text-white text-lg h-40p w-350 p-b10"
               >
               Reset Password
             </Button>
