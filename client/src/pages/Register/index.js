@@ -193,22 +193,26 @@ const validateIdentificationNumber = (_, value) => {
             rules={[
               {
                 required: true,
-                validator: (_, value) => {
-                  if (value && typeof value === 'string') {
+            
+                  validator: (_, value) => {
+                    if (!value || typeof value !== 'string') {
+                      return Promise.reject(new Error("Please enter your email."));
+                    }
+                
                     // Check if the email contains any capital letters
                     if (/[A-Z]/.test(value)) {
                       return Promise.reject(new Error("Email addresses are case-sensitive."));
                     }
-              
+                
                     // Check if the input is not a valid email format
                     if (!value.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)) {
                       return Promise.reject(new Error("Please enter a valid email address."));
                     }
-                  }
-                  return Promise.resolve();
+                
+                    return Promise.resolve();
+                  },
                 },
-              },
-              
+                
               
             ]}
                 >
@@ -257,16 +261,29 @@ const validateIdentificationNumber = (_, value) => {
   label="Mobile"
   name="phoneNumber"
   rules={[
+    // {
+    //   required: true,
+    //   message: "Please input your phone number!",
+    // },
+    // {
+    //   validator: (_, value) =>
+    //     value && isValidPhoneNumber(value)
+    //       ? Promise.resolve()
+    //       : Promise.reject(new Error("Invalid phone number")),
+    // },
     {
       required: true,
-      message: "Please input your phone number!",
+      validator: (_, value) => {
+        if (!value) {
+          return Promise.reject(new Error("Please enter your phone number."));
+        }
+        if (!isValidPhoneNumber(value)) {
+          return Promise.reject(new Error("Invalid phone number!"));
+        }
+        return Promise.resolve();
+      },
     },
-    {
-      validator: (_, value) =>
-        value && isValidPhoneNumber(value)
-          ? Promise.resolve()
-          : Promise.reject(new Error("Invalid phone number")),
-    },
+    
   ]}
 >
   <PhoneInput
@@ -371,19 +388,20 @@ const validateIdentificationNumber = (_, value) => {
   rules={[
     {
       required: true,
-      message: "Please input your password!",
-    },
-    {
-      validator: (_, value) => {
-        if (!value || value.length !== 6) {
-          return Promise.reject(new Error("Password must be exactly 6 characters long!"));
-        }
-        if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
-          return Promise.reject(new Error("Password must contain at least an uppercase, a lowercase, and a number!"));
-        }
-        return Promise.resolve();
+        validator: (_, value) => {
+          if (!value) {
+            return Promise.reject(new Error("Please enter your password."));
+          }
+          if (value.length !== 6) {
+            return Promise.reject(new Error("Password must be exactly 6 characters long!"));
+          }
+          if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+            return Promise.reject(new Error("Password must contain at least an uppercase letter, a lowercase letter, and a number!"));
+          }
+          return Promise.resolve();
+        },
       },
-    },
+      
   ]}
 >
   <Input.Password
