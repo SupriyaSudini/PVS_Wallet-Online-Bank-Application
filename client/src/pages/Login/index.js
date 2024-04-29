@@ -50,7 +50,33 @@ function Login() {
           <Row gutter={16}>
 
             <Col span={24}>
-              <Form.Item label="Email" name="email">
+              <Form.Item label="Email" name="email"
+                rules={[
+                  {
+                    required: true,
+                
+                      validator: (_, value) => {
+                        if (!value || typeof value !== 'string') {
+                          return Promise.reject(new Error("Please enter your email."));
+                        }
+                    
+                        // Check if the email contains any capital letters
+                        if (/[A-Z]/.test(value)) {
+                          return Promise.reject(new Error("Email addresses are case-sensitive."));
+                        }
+                    
+                        // Check if the input is not a valid email format
+                        if (!value.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)) {
+                          return Promise.reject(new Error("Please enter a valid email address."));
+                        }
+                    
+                        return Promise.resolve();
+                      },
+                    },
+                    
+                  
+                ]}
+              >
                 <Input type="email" placeholder="email"
                   prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} />
               </Form.Item>
@@ -58,7 +84,34 @@ function Login() {
 
 
             <Col span={24}>
-              <Form.Item label="Password" name="password">
+              <Form.Item label="Password" name="password"
+                  //  rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "Please Enter your Password!!!",
+                  //   },
+                  // ]}
+                  rules={[
+                    {
+                      required: true,
+                        validator: (_, value) => {
+                          if (!value) {
+                            return Promise.reject(new Error("Please enter your password."));
+                          }
+                          if (value.length !== 6) {
+                            return Promise.reject(new Error("Password must be exactly 6 characters long!"));
+                          }
+                          if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+                            return Promise.reject(new Error("Password must contain specific characters (A-Z, a-z, 0-9)."));
+                          }
+                          return Promise.resolve();
+                        },
+                      },
+                      
+                  ]}
+
+             
+              >
                 {/* <Input type="password" placeholder="password"/> */}
                 <Input.Password prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
                   type="password" placeholder="Password"
