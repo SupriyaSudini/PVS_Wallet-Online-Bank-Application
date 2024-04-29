@@ -190,21 +190,27 @@ const validateIdentificationNumber = (_, value) => {
               </Col>
               <Col span={6}>
                 <Form.Item label="Email" name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email!",
-                    },
-                    // {
-                    //   type: "email",
-                    //   message: "Please enter a valid email address!",
-                    // },
-                    {
-                      pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
-                      message: "Please enter a valid email address!",
-                    },
-                  
-                  ]}
+            rules={[
+              {
+                required: true,
+                validator: (_, value) => {
+                  if (value && typeof value === 'string') {
+                    // Check if the email contains any capital letters
+                    if (/[A-Z]/.test(value)) {
+                      return Promise.reject(new Error("Email addresses are case-sensitive."));
+                    }
+              
+                    // Check if the input is not a valid email format
+                    if (!value.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)) {
+                      return Promise.reject(new Error("Please enter a valid email address."));
+                    }
+                  }
+                  return Promise.resolve();
+                },
+              },
+              
+              
+            ]}
                 >
                 <Input
                     style={getInputStyle('input3')}
