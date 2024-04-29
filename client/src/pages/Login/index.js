@@ -94,21 +94,25 @@ function Login() {
                   rules={[
                     {
                       required: true,
-                        validator: (_, value) => {
-                          if (!value) {
-                            return Promise.reject(new Error("Please enter your password."));
-                          }
-                          if (value.length !== 6) {
-                            return Promise.reject(new Error("Password must be exactly 6 characters long!"));
-                          }
-                          if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
-                            return Promise.reject(new Error("Password must contain specific characters (A-Z, a-z, 0-9)."));
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                      
+                      message: 'Please Enter your Password!!!!!',
+                    }
                   ]}
+                      // required: true,
+                      //   validator: (_, value) => {
+                      //     if (!value) {
+                      //       return Promise.reject(new Error("Please enter your password."));
+                      //     }
+                      //     if (value.length !== 6) {
+                      //       return Promise.reject(new Error("Password must be exactly 6 characters long!"));
+                      //     }
+                      //     if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+                      //       return Promise.reject(new Error("Password must contain specific characters (A-Z, a-z, 0-9)."));
+                      //     }
+                      //     return Promise.resolve();
+                      //   },
+                      // },
+                      
+                
 
              
               >
