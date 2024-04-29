@@ -76,3 +76,14 @@ export const ResetPassword = async (token, newPassword) => {
       throw error.response.data;
     }
   };
+
+
+  // validate Email
+  export const CheckEmail = async (email) => {
+    try {
+      const response = await axiosInstance.post("/api/users/check-email", { email });
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to check email");
+    }
+  };

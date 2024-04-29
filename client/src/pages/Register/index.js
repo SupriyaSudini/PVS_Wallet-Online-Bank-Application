@@ -17,6 +17,9 @@ import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 import PhoneInput,{isValidPhoneNumber} from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
+//fake or real email
+import isDisposableEmail from 'is-disposable-email';
+
 
 
 
@@ -112,6 +115,19 @@ const validateIdentificationNumber = (_, value) => {
 };
 
 
+// const handleEmailBlur = (event) => {
+//   const { value } = event.target || {}; // Ensure value is defined
+//   if (value && isDisposableEmail(value)) {
+//     form.setFields([
+//       {
+//         name: "email",
+//         errors: ["This email domain is not allowed. Please use a valid email address."],
+//       },
+//     ]);
+//   }
+// };
+
+
 
 
     return (
@@ -183,6 +199,7 @@ const validateIdentificationNumber = (_, value) => {
                       type: "email",
                       message: "Please enter a valid email address!",
                     },
+                  
                   ]}
                 >
                 <Input
@@ -192,6 +209,7 @@ const validateIdentificationNumber = (_, value) => {
                     onClick={() => handleClick('input3')}
                     type="text" placeholder="email"
                     prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} 
+                    // onBlur={handleEmailBlur}
                     />
                 </Form.Item>
               </Col>
@@ -319,7 +337,7 @@ const validateIdentificationNumber = (_, value) => {
               </Col>
     
               <Col span={6}>
-                <Form.Item label="Password" name="password"
+                {/* <Form.Item label="Password" name="password"
                  rules={[
                   {
                     required: true,
@@ -335,7 +353,43 @@ const validateIdentificationNumber = (_, value) => {
                      type="password" placeholder="password" 
                      prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
                      />
-                </Form.Item>
+                </Form.Item> */}
+
+<Form.Item
+  label="Password"
+  name="password"
+  rules={[
+    {
+      required: true,
+      message: "Please input your password!",
+    },
+    {
+      validator: (_, value) => {
+        if (!value || value.length !== 6) {
+          return Promise.reject(new Error("Password must be exactly 6 characters long!"));
+        }
+        if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+          return Promise.reject(new Error("Password must contain at least an uppercase, a lowercase, and a number!"));
+        }
+        return Promise.resolve();
+      },
+    },
+  ]}
+>
+  <Input.Password
+    style={getInputStyle('input6')}
+    onMouseEnter={() => handleMouseEnter('input6')}
+    onMouseLeave={handleMouseLeave}
+    onClick={() => handleClick('input6')}
+    type="password"
+    placeholder="Password"
+    prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+  />
+</Form.Item>
+
+
+
+
               </Col>
     
               <Col span={6}>

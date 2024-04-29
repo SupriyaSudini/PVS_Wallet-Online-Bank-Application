@@ -36,7 +36,7 @@ function ResetPasswordPage() {
         </div>
         
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item
+          {/* <Form.Item
             label="New Password"
             name="newPassword"
             rules={[
@@ -47,7 +47,31 @@ function ResetPasswordPage() {
             ]}
           >
             <Input.Password placeholder="New Password" />
-          </Form.Item>
+          </Form.Item> */}
+          <Form.Item
+  label="New Password"
+  name="newPassword"
+  rules={[
+    {
+      required: true,
+      message: "Please input your new password!",
+    },
+    {
+      validator: (_, value) => {
+        if (!value || value.length !== 6) {
+          return Promise.reject(new Error("Password must be exactly 6 characters long!"));
+        }
+        if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+          return Promise.reject(new Error("Password must contain at least an uppercase, a lowercase, and a number!"));
+        }
+        return Promise.resolve();
+      },
+    },
+  ]}
+>
+  <Input.Password placeholder="New Password" />
+</Form.Item>
+
 
           <Form.Item
             label="Confirm Password"
