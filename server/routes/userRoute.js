@@ -231,7 +231,7 @@ router.post("/forgot-password", async (req, res) => {
     // Send an email to the user with the reset password link
     
     // const resetLink = `http://localhost:3000/reset-password/${token}`;
-    const resetLink = `https://pvs-wallet-backend.vercel.app/reset-password/${token}`
+    const resetLink = `https://pvs-wallet-bank-application.vercel.app/reset-password/${token}`;
 
 
  
