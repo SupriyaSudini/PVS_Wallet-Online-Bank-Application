@@ -27,8 +27,40 @@ router.post("/register", async (req, res) => {
     // create new user
     const newUser = new User(req.body);
     await newUser.save(); // save user
+
+
+
+    // Email Notification Logic
+    const transporter = nodemailer.createTransport({
+      service: 'gmail', // or your email service provider
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    // Fetch super admin email from the database (assuming you have a method to get it)
+    const superAdmin = await User.findOne({ role: 'superadmin' }); // Adjust this query based on your user model
+
+    if (superAdmin) {
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: superAdmin.email, // Assuming `superAdmin.email` holds the super admin's email
+        subject: 'New User Registration',
+        text: `A new user has registered with the email: ${req.body.email}. Please activate their account.`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error sending email:", error);
+        } else {
+          console.log("Email sent:", info.response);
+        }
+      });
+    }
+
     res.send({
-      message: "User created Successfully",
+      message: "User created Successfully, A notification has been sent to the admin.",
       data: null, // we should not send the password to fron-end
       success: true,
     });
@@ -131,12 +163,13 @@ router.post("/update-user-verified-status", authMiddleware, async(req, res) => {
       await User.findByIdAndUpdate(req.body.selectedUser,{
         isVerified: req.body.isVerified,
       });
+      
       res.send({
         data: null,
         message: "User Verified status Updated Successfully",
         success: true
       });
-    }catch(error){
+    } catch(error){
       res.send({
         data: error,
         message: error.message,

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/userModel");
+const nodemailer = require('nodemailer');
 const authMiddleware = require("../middlewares/authMiddleware");
 
 // adminroute
@@ -42,6 +43,8 @@ router.post("/update-admin-status", authMiddleware,  async(req, res) => {
     });
   }
 });
+
+
 
 
 module.exports = router;
